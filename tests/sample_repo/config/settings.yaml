@@ -1,0 +1,25 @@
+# FIX: Update database connection string for production environment
+database:
+  host: localhost
+  port: 5432
+  username: db_user
+  password: ${DB_PASSWORD}
+  name: app_db
+
+# TODO: Implement certificate validation
+server:
+  port: 8080
+  debug: false
+  timeout: 30
+
+# NOTE: These are sample API keys for testing only
+api:
+  stripe_key: sk_test_4eC39HqLyjWDarhtT657jjj
+  sendgrid_key: SG.test_key_1234567890
+  rate_limit: 100
+
+# FIX: Move secrets to environment variables
+logging:
+  level: DEBUG
+  file: logs/app.log
+  format: json
