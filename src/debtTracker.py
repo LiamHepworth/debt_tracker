@@ -2,6 +2,7 @@ import argparse
 import pathlib
 from typing import List, Optional
 
+from fileParser import fileParser
 from fileScanner import fileScanner
 
 
@@ -41,7 +42,10 @@ class DebtTracker:
     def run(self):
         """Entry point"""
         scanner = fileScanner(self.args.repo_path)
-        print(scanner.run())
+        file_paths = scanner.run()
+
+        parser = fileParser(file_paths)
+        print(parser.run())
 
     def main(self):
         """Execute the app"""
