@@ -19,19 +19,12 @@ class DebtTracker:
         args_group = parser.add_argument_group("group")
 
         args_group.add_argument(
-            "--repo_path",
-            "-p",
-            required=True,
-            type=pathlib.Path,
-            help="Path to the repo which should be scanned for tech-debt",
-        )
-
-        args_group.add_argument(
             "--search_area",
             "-s",
+            required=True,
             nargs="+",
             type=pathlib.Path,
-            help="One or more repo paths which aggregated summaries should be shown for",
+            help="One or more repo paths which should be scanned",
         )
 
         return parser
@@ -50,11 +43,10 @@ class DebtTracker:
 
     def run(self):
         """Entry point"""
-        repo_path = self.args.repo_path.resolve()
-        search_areas = self.args.search_area or []
+        search_areas = [search_area.resolve() for search_area in self.args.search_area]
 
         # Get all filepaths we are extracting comments from
-        scanner = fileScanner(repo_path)
+        scanner = fileScanner(search_areas)
         file_paths = scanner.run()
 
         # Parse out comments into ParsedComment instances
@@ -65,12 +57,11 @@ class DebtTracker:
         aggregator = commentAggregator(parsed_comments)
 
         # Aggregated summary of comments within a search area
-        if search_areas:
-            search_area_comments = aggregator.aggregate_by_area(search_areas)
+        search_area_comments = aggregator.aggregate_by_area(search_areas)
 
-            # Print for debug purposes
-            for comment in search_area_comments:
-                print(comment)
+        # Print for debug purposes
+        for comment in search_area_comments:
+            print(comment)
 
         # Aggregated summary of comments within each file
         file_comments = aggregator.aggregate_by_file()
