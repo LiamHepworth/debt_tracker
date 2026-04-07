@@ -1,6 +1,6 @@
 import re
 from pathlib import Path
-from typing import List, NamedTuple, Optional, Pattern, Sequence
+from typing import List, NamedTuple, Pattern, Sequence
 
 
 class ParsedComment(NamedTuple):
@@ -12,6 +12,10 @@ class ParsedComment(NamedTuple):
     line_number: int
     keyword: str
     line_content: str
+
+
+# FIXME: Do we need any further fields on these instances
+# for classification purposes?
 
 
 class fileParser:

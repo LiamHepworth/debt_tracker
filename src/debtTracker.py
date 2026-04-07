@@ -2,6 +2,7 @@ import argparse
 import pathlib
 from typing import List, Optional
 
+from commentAggregator import commentAggregator
 from fileParser import fileParser
 from fileScanner import fileScanner
 
@@ -22,7 +23,15 @@ class DebtTracker:
             "-p",
             required=True,
             type=pathlib.Path,
-            help="Path to the repo which should be scanned",
+            help="Path to the repo which should be scanned for tech-debt",
+        )
+
+        args_group.add_argument(
+            "--search_area",
+            "-s",
+            nargs="+",
+            type=pathlib.Path,
+            help="One or more repo paths which aggregated summaries should be shown for",
         )
 
         return parser
@@ -41,11 +50,25 @@ class DebtTracker:
 
     def run(self):
         """Entry point"""
-        scanner = fileScanner(self.args.repo_path)
+        repo_path = self.args.repo_path.resolve()
+
+        # Get all filepaths we are extracting comments from
+        scanner = fileScanner(repo_path)
         file_paths = scanner.run()
 
+        # Parse out comments into ParsedComment instances
         parser = fileParser(file_paths)
-        print(parser.run())
+        parsed_comments = parser.run()
+
+        # Pass comments to aggregator class
+        aggregator = commentAggregator(parsed_comments)
+
+        # Aggregated summary of comments within each file
+        file_groups = aggregator.aggregate_by_file()
+
+        #  Print for debug purposes
+        for group in file_groups:
+            print(group)
 
     def main(self):
         """Execute the app"""
