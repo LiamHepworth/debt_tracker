@@ -51,6 +51,7 @@ class DebtTracker:
     def run(self):
         """Entry point"""
         repo_path = self.args.repo_path.resolve()
+        search_areas = self.args.search_area or []
 
         # Get all filepaths we are extracting comments from
         scanner = fileScanner(repo_path)
@@ -63,12 +64,20 @@ class DebtTracker:
         # Pass comments to aggregator class
         aggregator = commentAggregator(parsed_comments)
 
-        # Aggregated summary of comments within each file
-        file_groups = aggregator.aggregate_by_file()
+        # Aggregated summary of comments within a search area
+        if search_areas:
+            search_area_comments = aggregator.aggregate_by_area(search_areas)
 
-        #  Print for debug purposes
-        for group in file_groups:
-            print(group)
+            # Print for debug purposes
+            for comment in search_area_comments:
+                print(comment)
+
+        # Aggregated summary of comments within each file
+        file_comments = aggregator.aggregate_by_file()
+
+        # Print for debug purposes
+        for comment in file_comments:
+            print(comment)
 
     def main(self):
         """Execute the app"""
