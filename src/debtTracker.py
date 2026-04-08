@@ -5,6 +5,7 @@ from typing import List, Optional
 from commentAggregator import commentAggregator
 from fileParser import fileParser
 from fileScanner import fileScanner
+from reportRenderer import ReportRenderer
 
 
 class DebtTracker:
@@ -59,16 +60,21 @@ class DebtTracker:
         # Aggregated summary of comments within a search area
         search_area_comments = aggregator.aggregate_by_area(search_areas)
 
-        # Print for debug purposes
-        for comment in search_area_comments:
-            print(comment)
-
         # Aggregated summary of comments within each file
         file_comments = aggregator.aggregate_by_file()
 
-        # Print for debug purposes
-        for comment in file_comments:
-            print(comment)
+        # Add all the file_comment objects to a dict for easier access
+        context = {"files": file_comments}
+
+        # Instantiate renderer and render the report to the ./work directory
+        renderer = ReportRenderer("./src/templates")
+        renderer.render("report_template.html", context, "work/tech_debt_report.html")
+
+        # NOTE:
+        # Visualisation hierarchy:
+        # Overall summary section - total comments, total files with comments, total areas with comments, summary of keywords, top 10 files with comments?
+        # Area level summary - Area Path, total files, total comments, keyword breakdown, this could be a bar chart or table
+        # File level summary - table for each file showing keyword, line number, etc etc
 
     def main(self):
         """Execute the app"""
