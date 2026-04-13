@@ -16,10 +16,6 @@ class commentsOfFile:
         # Assign comments as a list sorted by line number
         self.comments = sorted(comments, key=lambda comment: (comment.line_number))
 
-    # FIXME: DEBUG ONLY, REMOVE
-    def __repr__(self) -> str:
-        return f"{self.file_path} ({len(self.comments)} comments)"
-
     @property
     def total_comments(self) -> int:
         """Return the number of matched comments inside the file."""
@@ -49,10 +45,6 @@ class commentsOfArea:
         self.comments = sorted(
             comments, key=lambda comment: (comment.file_path, comment.line_number)
         )
-
-    # FIXME: DEBUG ONLY, REMOVE
-    def __str__(self) -> str:
-        return f"{self.area_path} ({len(self.comments)} comments)"
 
     @property
     def total_comments(self) -> int:

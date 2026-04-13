@@ -86,12 +86,6 @@ class DebtTracker:
         renderer = ReportRenderer("./src/templates")
         renderer.render("report_template.html", context, "work/tech_debt_report.html")
 
-        # NOTE:
-        # Visualisation hierarchy:
-        # Overall summary section - total comments, total files with comments, total areas with comments, summary of keywords, top 10 files with comments?
-        # Area level summary - Area Path, total files, total comments, keyword breakdown, this could be a bar chart or table
-        # File level summary - table for each file showing keyword, line number, etc etc
-
     def main(self):
         """Execute the app"""
         self.run()

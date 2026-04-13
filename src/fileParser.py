@@ -14,10 +14,6 @@ class ParsedComment(NamedTuple):
     line_content: str
 
 
-# FIXME: Do we need any further fields on these instances
-# for classification purposes?
-
-
 class fileParser:
     """
     Class to parse tracked files and extract comment-like markers.
