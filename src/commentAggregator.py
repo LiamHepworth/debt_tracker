@@ -17,7 +17,7 @@ class commentsOfFile:
         self.comments = sorted(comments, key=lambda comment: (comment.line_number))
 
     # FIXME: DEBUG ONLY, REMOVE
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         return f"{self.file_path} ({len(self.comments)} comments)"
 
     @property
@@ -140,3 +140,14 @@ class commentAggregator:
                 area_groups.append(area_group)
 
         return area_groups
+
+    def all_keyword_counts(self) -> Dict[str, int]:
+        """Return total matched keyword counts across all files."""
+        counts: Dict[str, int] = {}
+
+        # Consolidate all the individual keyword counts per file into one object
+        for file_group in self.aggregate_by_file():
+            for keyword, count in file_group.keyword_counts().items():
+                counts[keyword] = counts.get(keyword, 0) + count
+
+        return counts

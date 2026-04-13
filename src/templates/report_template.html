@@ -11,6 +11,34 @@
             margin: 2rem;
         }
 
+        .summary-grid {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0 2rem;
+        }
+
+        .summary-card {
+            min-width: 12rem;
+            padding: 1rem 1.25rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            background-color: #fafafa;
+        }
+
+        .summary-label {
+            margin: 0;
+            color: #555;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .summary-value {
+            margin: 0.4rem 0 0;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
@@ -36,6 +64,17 @@
 <body>
 
     <h1>Technical Debt Report</h1>
+
+    <section class="summary-grid">
+        <div class="summary-card">
+            <p class="summary-label">Total Comments</p>
+            <p class="summary-value">{{ total_comments }}</p>
+        </div>
+        <div class="summary-card">
+            <p class="summary-label">Total Files</p>
+            <p class="summary-value">{{ total_files }}</p>
+        </div>
+    </section>
 
     <table>
         <thead>

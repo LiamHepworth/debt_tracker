@@ -61,12 +61,27 @@ class DebtTracker:
         search_area_comments = aggregator.aggregate_by_area(search_areas)
 
         # Aggregated summary of comments within each file
-        file_comments = aggregator.aggregate_by_file()
+        file_aggregates = aggregator.aggregate_by_file()
 
-        # Add all the file_comment objects to a dict for easier access
-        context = {"files": file_comments}
+        # Counts of all the keywords across the entire search area.
+        all_keyword_counts = aggregator.all_keyword_counts()
 
-        # Instantiate renderer and render the report to the ./work directory
+        # Total number of extracted comments in the search area
+        total_comments = 0
+
+        for file in file_aggregates:
+            total_comments += file.total_comments
+
+        # Total number of files parsed within the search area
+        total_files = len(file_paths)
+
+        context = {
+            "files": file_aggregates,
+            "total_comments": total_comments,
+            "total_files": total_files,
+        }
+
+        # # Instantiate renderer and render the report to the ./work directory
         renderer = ReportRenderer("./src/templates")
         renderer.render("report_template.html", context, "work/tech_debt_report.html")
 
