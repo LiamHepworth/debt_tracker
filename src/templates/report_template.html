@@ -5,9 +5,7 @@
     <meta charset="utf-8">
     <title>Technical Debt Report</title>
     <style>
-        {
-            % include "assets/style.css" %
-        }
+        {% include "assets/style.css" %}
     </style>
 </head>
 
@@ -35,30 +33,37 @@
         </div>
     </section>
 
-    <table>
-        <thead>
-            <tr>
-                <th>File Path</th>
-                <th>Line Number</th>
-                <th>Keyword Match</th>
-                <th>Comment</th>
-            </tr>
-        </thead>
-        <tbody>
+    <h2>Comments by File</h2>
 
-            {% for file in files %}
-            {% for comment in file.comments %}
-            <tr>
-                <td>{{ file.file_path }}</td>
-                <td>{{ comment.line_number }}</td>
-                <td>{{ comment.keyword }}</td>
-                <td>{{ comment.line_content }}</td>
-            </tr>
-            {% endfor %}
-            {% endfor %}
+    {% for file in files %}
+    <section class="file-section">
+        <h3>{{ file.file_path }}</h3>
 
-        </tbody>
-    </table>
+        <table class="comments-table">
+            <colgroup>
+                <col class="col-line-number">
+                <col class="col-keyword">
+                <col class="col-comment">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Line Number</th>
+                    <th>Keyword Match</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comment in file.comments %}
+                <tr>
+                    <td>{{ comment.line_number }}</td>
+                    <td>{{ comment.keyword }}</td>
+                    <td>{{ comment.line_content }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    {% endfor %}
 
     <script id="keyword-chart-data" type="application/json">
         {{ keyword_counts | tojson }}

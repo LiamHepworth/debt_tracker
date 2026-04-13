@@ -56,6 +56,16 @@ body {
     min-height: 320px;
 }
 
+.file-section {
+    margin-top: 2rem;
+}
+
+.file-section h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.1rem;
+    word-break: break-all;
+}
+
 @media (max-width: 900px) {
     .overview-layout {
         flex-direction: column;
@@ -71,11 +81,28 @@ table {
     width: 100%;
 }
 
+.comments-table {
+    table-layout: fixed;
+}
+
+.col-line-number {
+    width: 9rem;
+}
+
+.col-keyword {
+    width: 10rem;
+}
+
 th,
 td {
     border: 1px solid #ccc;
     padding: 0.5rem;
     text-align: left;
+    vertical-align: top;
+}
+
+td {
+    overflow-wrap: anywhere;
 }
 
 th {
