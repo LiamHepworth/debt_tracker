@@ -77,8 +77,9 @@ class DebtTracker:
 
         context = {
             "files": file_aggregates,
-            "total_comments": total_comments,
             "total_files": total_files,
+            "total_comments": total_comments,
+            "keyword_counts": all_keyword_counts,
         }
 
         # # Instantiate renderer and render the report to the ./work directory
