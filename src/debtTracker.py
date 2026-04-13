@@ -28,6 +28,13 @@ class DebtTracker:
             help="One or more repo paths which should be scanned",
         )
 
+        args_group.add_argument(
+            "--keywords",
+            "-k",
+            nargs="+",
+            help="Optional list of keywords to search for. Overrides the default keyword set.",
+        )
+
         return parser
 
     @classmethod
@@ -51,7 +58,7 @@ class DebtTracker:
         file_paths = scanner.run()
 
         # Parse out comments into ParsedComment instances
-        parser = fileParser(file_paths)
+        parser = fileParser(file_paths, keywords=self.args.keywords)
         parsed_comments = parser.run()
 
         # Pass comments to aggregator class

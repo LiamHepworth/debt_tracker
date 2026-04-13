@@ -19,20 +19,22 @@ class fileParser:
     Class to parse tracked files and extract comment-like markers.
     """
 
-    # Default keywords to search for,
-    # FIXME: Add abaility to customise this later
     DEFAULT_KEYWORDS = ("FIX", "NOTE", "TODO", "REVISIT", "BUG")
 
     def __init__(
         self,
         file_paths: Sequence[str],
+        keywords: Sequence[str] | None = None,
     ):
         """Initialize the parser with files to inspect and keywords to match."""
         # Array of Path objects pointing to each file
         self.file_paths = [Path(file_path) for file_path in file_paths]
 
-        # Default keywords
-        self.keywords = self.DEFAULT_KEYWORDS
+        # Use custom keywords when provided, otherwise fall back to the defaults.
+        if keywords:
+            self.keywords = tuple(keyword.upper() for keyword in keywords)
+        else:
+            self.keywords = self.DEFAULT_KEYWORDS
 
         # Regex pattern to match keywords
         self.pattern = self._build_pattern(self.keywords)
