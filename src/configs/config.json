@@ -1,0 +1,7 @@
+{
+  "exclude_suffixes": [
+    ".pyc",
+    ".svh",
+    ".sh"
+  ]
+}

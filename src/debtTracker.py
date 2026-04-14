@@ -35,6 +35,16 @@ class DebtTracker:
             help="Optional list of keywords to search for. Overrides the default keyword set.",
         )
 
+        args_group.add_argument(
+            "--config",
+            "-c",
+            type=pathlib.Path,
+            help=(
+                "Optional path to a JSON file containing file suffixes "
+                "to exclude from scanning."
+            ),
+        )
+
         return parser
 
     @classmethod
@@ -54,7 +64,7 @@ class DebtTracker:
         search_areas = [search_area.resolve() for search_area in self.args.search_area]
 
         # Get all filepaths we are extracting comments from
-        scanner = fileScanner(search_areas)
+        scanner = fileScanner(search_areas, config_path=self.args.config)
         file_paths = scanner.run()
 
         # Parse out comments into ParsedComment instances
