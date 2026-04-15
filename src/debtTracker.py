@@ -74,9 +74,6 @@ class DebtTracker:
         # Pass comments to aggregator class
         aggregator = commentAggregator(parsed_comments)
 
-        # Aggregated summary of comments within a search area
-        search_area_comments = aggregator.aggregate_by_area(search_areas)
-
         # Aggregated summary of comments within each file
         file_aggregates = aggregator.aggregate_by_file()
 
